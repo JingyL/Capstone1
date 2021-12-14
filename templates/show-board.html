@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>board</h1>
+
+{{response["name"]}}
+
+<div class="row">
+{% for list in lists %}
+<div class="col-3">
+<p>{{list["name"]}}</p>
+</div>
+{% endfor %}
+</div>
+
+
+<div>
+<a href="/create-list">Create a List</a>
+</div>
+<div>
+<a href="/add-card">Add a card</a>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>board</h1>
+{% for board in boards %}
+<div class="col-3">
+<p><a href="/board/{{board.id}}">{{board.name}}</a></p>
+</div>
+{% endfor %}
+<a href="/create-board">Create a board</a>
+
+{% endblock %}
