@@ -1,4 +1,4 @@
-from trello import TrelloClient   
+# from trello import TrelloClient   
 from flask import Flask, redirect, render_template, flash
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -20,12 +20,12 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 debug = DebugToolbarExtension(app)
 
-client = TrelloClient(
-    api_key='73ac60f9e2503794796f272568e34347',
-    api_secret='mysecret',
-    token='605ac71e5c83d0481157a2236c56eae0adadd20a545fec6f2e46a5b6a5bdb81a',
-    token_secret='1ccd9f6fce839f781ae4fd7564587e0d47e3923c112fb82b111376f358964571'
-)
+# client = TrelloClient(
+#     api_key='73ac60f9e2503794796f272568e34347',
+#     api_secret='mysecret',
+#     token='605ac71e5c83d0481157a2236c56eae0adadd20a545fec6f2e46a5b6a5bdb81a',
+#     token_secret='1ccd9f6fce839f781ae4fd7564587e0d47e3923c112fb82b111376f358964571'
+# )
 
 connect_db(app)
 db.create_all()
