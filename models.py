@@ -19,3 +19,17 @@ class CollabBoard(db.Model):
 
     boardID = db.Column(db.String, nullable=False, unique=True)
 
+class CollabList(db.Model):
+    """List."""
+
+    __tablename__ = 'colists'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    name = db.Column(db.Text, nullable=False)
+
+    boards_id = db.Column(db.Integer, db.ForeignKey('boards.id'), nullable=False)
+
+    boards = db.relationship('CollabBoard', backref='colists')
+
+

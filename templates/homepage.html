@@ -1,13 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<h1>board</h1>
+<div class="container">
+<div class="row">
+    <div>
+        <h1>board</h1>
+    </div>
+    <div>
+        <a href="/create-board"><i class="fas fa-plus"></i></a>
+    </div>
+</div>
+<div class="row">
 {% for board in boards %}
 <div class="col-3">
-<p><a href="/board/{{board.id}}">{{board.name}}</a></p>
+    <div class="card bg-dark mb-3 text-center" style="height: 10rem; width: 10rem;">
+    <p class="center"><a href="/board/{{board.id}}">{{board.name}}</a></p>
+    </div>
+
 </div>
 {% endfor %}
-<a href="/create-board">Create a board</a>
-
+</div>
+</div>
 {% endblock %}

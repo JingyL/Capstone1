@@ -16,6 +16,9 @@ Cards table has information of cards name, description, deadline.
 _ _Haven’t found solutions to connect boards, lists and cards
 The database may add more data based on the features that I want to add._ _
 
+(Added)API:
+OpenWeatherMap API, based on users location show current weather and 4-days weather
+
 ## User Flow:
 Users have to signup/login first, and then they can see their existing boards or add a new board. After clicking on the board they want to see, the page will jump to the board page. Then users can adjust their lists and cards.
 ![This is an image](/user-flow.png)

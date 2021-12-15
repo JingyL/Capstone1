@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<h1>board</h1>
+<h1>{{response["name"]}}</h1>
 
-{{response["name"]}}
+
 
 <div class="row">
 {% for list in lists %}
@@ -16,7 +16,7 @@
 
 
 <div>
-<a href="/create-list">Create a List</a>
+<a href="/create-list/{{response['id']}}">Create a List</a>
 </div>
 <div>
 <a href="/add-card">Add a card</a>

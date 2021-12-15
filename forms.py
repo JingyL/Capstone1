@@ -11,3 +11,10 @@ class boardForm(FlaskForm):
     name = StringField("name", validators=[
                        InputRequired(message="Name can't be blank")])
  
+
+class listForm(FlaskForm):
+    """Form for adding playlists."""
+
+    # Add the necessary code to use this form
+    name = StringField("name", validators=[
+                       InputRequired(message="Name can't be blank")])
