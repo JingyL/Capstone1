@@ -2,23 +2,39 @@
 
 {% block content %}
 <div class="container">
-<div class="row">
-    <div>
-        <h1>board</h1>
-    </div>
-    <div>
-        <a href="/create-board"><i class="fas fa-plus"></i></a>
-    </div>
-</div>
-<div class="row">
-{% for board in boards %}
-<div class="col-3">
-    <div class="card bg-dark mb-3 text-center" style="height: 10rem; width: 10rem;">
-    <p class="center"><a href="/board/{{board.id}}">{{board.name}}</a></p>
+    <div class="row">
+    <div class="col-9">
+        <div class="row">
+            <div>
+                <h1>board</h1>
+            </div>
+            <div>
+                <a href="/{{session['username']}}/create-board"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="row">
+            {% for board in boards %}
+            <div class="col-3">
+                <div class="card bg-dark mb-3 text-center" style="height: 10rem; width: 10rem;">
+                    <p class="center"><a href="/{{session['username']}}/board/{{board.id}}">{{board.name}}</a></p>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
     </div>
 
+
+    <div class="col-3">
+        <div class="weatherbox">
+            <p class="temp">{{weather["main"]["temp"]}}<span>&#8457;</span></p>
+            <p class="description">{{weather["weather"][0]["main"]}}</p>
+            <p class="localtime">{{weather["name"]}}</p>
+
+
+    </div>
+    </div>
 </div>
-{% endfor %}
 </div>
-</div>
+
 {% endblock %}

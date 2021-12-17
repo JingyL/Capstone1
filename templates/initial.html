@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="welcomebox">
+    <h1 class="welcome-title">Welcome To DO Web</h1>
+    {% if session['username'] %}
+    <a href="/{{session['username']}}/board">Go to your dashboard</a>
+    {% else %}
+    <h3>Please Log In/ Sign Up first to use! </h3>
+    <a href="/login">Log In</a>
+    <a href="/register">Sign Up</a>
+    {% endif %}
+</div>
+
+<!-- 
+{% for category, msg in get_flashed_messages(with_categories=True) %}
+<div class="alert alert-{{category}}">{{ msg }}</div>
+{% endfor %} -->
+
+{% endblock %}

@@ -1,9 +1,8 @@
-# from trello import TrelloClient   
-from flask import Flask, redirect, render_template, flash
+from flask import Flask, redirect, render_template, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
-from models import db, connect_db, CollabBoard, CollabList
-from forms import boardForm, listForm
+from models import db, connect_db, CollabBoard, CollabList, CollabCard, User
+from forms import boardForm, listForm, cardForm, UserForm, LoginForm
 from sqlalchemy.exc import IntegrityError
 
 import requests
@@ -20,107 +19,169 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 debug = DebugToolbarExtension(app)
 
-# client = TrelloClient(
-#     api_key='73ac60f9e2503794796f272568e34347',
-#     api_secret='mysecret',
-#     token='605ac71e5c83d0481157a2236c56eae0adadd20a545fec6f2e46a5b6a5bdb81a',
-#     token_secret='1ccd9f6fce839f781ae4fd7564587e0d47e3923c112fb82b111376f358964571'
-# )
-
 connect_db(app)
 db.create_all()
 
-create_board_url = "https://api.trello.com/1/boards/"
 
-@app.route("/", methods=['GET', 'POST'])
-def root():
-    """Homepage."""
-    # response = requests.get("https://api.trello.com/1/members/me/boards",
-    #     params = {
-    #         "key":"73ac60f9e2503794796f272568e34347",
-    #         "token":"605ac71e5c83d0481157a2236c56eae0adadd20a545fec6f2e46a5b6a5bdb81a"
-    #     })
-    # boards = response.json()
-    boards = CollabBoard.query.all()
-    return render_template('homepage.html', boards=boards)
+s_code = {"AL": "01", "AK": "54", "AZ": "02", "AR": "03", "CA": "04", 
+        "CO": "05", "CT": "06", "DC": "08", "DE": "07", "FL": "09", "GA": "10", 
+          "HI": "52", "ID": "11", "IL": "12", "IN": "13", "IA": "14", "KS": "15", 
+          "KY": "16", "LA": "17", "ME": "18", "MD": "19",
+          "MA": "20", "MI": "21", "MN": "22", "MS": "23", "MO": "24",
+           "MT": "25", "NE": "26", "NV": "27", "NH": "28", "NJ": "29",
+          "NM": "30", "NY": "31", "NC": "32", "ND": "33", "OH": "34", "OK": "35", 
+          "OR": "36", "PA": "37", "RI": "38", "SC": "39",
+          "SD": "40", "TN": "41", "TX": "42", "UT": "43", "VT": "44", "VA": "45", 
+          "WA": "46", "WV": "47", "WI": "48", "WY": "49"}
+
+##############################################################################
+# register
+# login
+# logout
+@app.route('/')
+def inital_page():
+    return render_template('initial.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register_user():
+    form = UserForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        email = form.email.data
+        first_name = form. first_name.data
+        last_name = form.last_name.data
+        city =  form.city.data
+        state = form.state.data
+        new_user = User.register(username, password, email, first_name, last_name, city, state)
+        db.session.add(new_user)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            form.username.errors.append('Username taken.  Please pick another')
+            return render_template('register.html', form=form)
+        session['user_id'] = new_user.id
+        session['username'] = new_user.username
+        return redirect(f"/{session['username']}/board")
+
+    return render_template('register.html', form=form)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login_user():
+    form = LoginForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        user = User.authenticate(username, password)
+        if user:
+            flash(f"Welcome Back, {user.username}!")
+            session['username'] = user.username
+            session['user_id'] = user.id
+            return redirect(f"/{session['username']}/board")
+        else:
+            form.username.errors = ['Invalid username/password.']
+
+    return render_template('login.html', form=form)
+
+@app.route('/logout')
+def logout_user():
+    session.pop('username')
+    session.pop('user_id')
+    flash("Goodbye!", "info")
+    return redirect('/')
+
+##############################################################################
+
+@app.route("/<username>/board", methods=['GET', 'POST'])
+def root(username):
+    """Main page."""
+    if 'username' not in session or username != session['username']:
+        flash("Please login first!")
+        return redirect('/')
+    user = User.query.filter_by(username=username).first()
+    city = user.city
+    state = user.state
+    state_code = s_code[state]
+    weather_res = requests.get("http://api.openweathermap.org/data/2.5/weather",
+        params = {
+            "q": f"{city}, {state_code}, us",
+            "appid":"c69ce1abd18c0eae09db094b5f772100"
+        })
+    weather = weather_res.json()
+    boards = CollabBoard.query.filter_by(user_id=user.id).all()
+
+    return render_template('homepage.html', boards=boards, weather=weather)
 
 ##############################################################################
 # Board
-@app.route("/create-board", methods=['GET', 'POST'])
-def createboard():
+@app.route("/<username>/create-board", methods=['GET', 'POST'])
+def createboard(username):
     """Create Board."""
+    if 'username' not in session or username != session['username']:
+        flash("Please login first!")
+        return redirect('/')
     form = boardForm()
     if form.validate_on_submit():
         name = form.name.data
-        response = requests.post("https://api.trello.com/1/boards/",
-        params = {
-            "key":"73ac60f9e2503794796f272568e34347",
-            "token":"605ac71e5c83d0481157a2236c56eae0adadd20a545fec6f2e46a5b6a5bdb81a",
-            "name":f"{name}"
-        })
-        res = response.json()
-        boardID = res['id']
-        new_board = CollabBoard(name=name,boardID=boardID )
-
+        user_id = session['user_id']
+        new_board = CollabBoard(name=name, user_id=user_id)
         db.session.add(new_board)
         db.session.commit()
-        # try:
-        #     db.session.commit()
-        # except IntegrityError:
-        #     form.name.errors.append('Name taken.  Please pick another')
-        #     return render_template('create-board.html', form=form)
-        # flash('Successfully Created Board')
-
-        # response = requests.post("https://api.trello.com/1/boards/",
-        # params = {
-        #     "key":"",
-        #     "token":"",
-        #     "name":f"{name}"
-        # })
-        board = CollabBoard.query.filter_by(name=name).first()
-        return redirect(f'/board/{board.id}')
+        # board = CollabBoard.query.filter_by(name=name).first()
+        return redirect(f'/{username}/board/{new_board.id}')
     return render_template('create-board.html', form=form)
 
 
-@app.route("/board/<int:board_id>", methods=['GET', 'POST'])
-def show_board(board_id):
+@app.route("/<username>/board/<int:board_id>", methods=['GET', 'POST'])
+def show_board(username,board_id):
     """Show Board, List."""
-    board = CollabBoard.query.get_or_404(board_id)
-    board_response = requests.get(f"https://api.trello.com/1/boards/{board.boardID}",
-        params = {
-            "key":"73ac60f9e2503794796f272568e34347",
-            "token":"605ac71e5c83d0481157a2236c56eae0adadd20a545fec6f2e46a5b6a5bdb81a",
-        })
-    res = board_response.json()
-
-    list_response = requests.get(f"https://api.trello.com/1/boards/{board.boardID}/lists",
-        params = {
-            "key":"73ac60f9e2503794796f272568e34347",
-            "token":"605ac71e5c83d0481157a2236c56eae0adadd20a545fec6f2e46a5b6a5bdb81a",
-        })
-    list_res = list_response.json()
-
-
-    return render_template('show-board.html', response=res, lists=list_res)
+    if 'username' not in session or username != session['username']:
+        flash("Please login first!")
+        return redirect('/')
+    # user = User.query.filter_by(username=username).first()
+    user_id = session['user_id']
+    board = CollabBoard.query.get(board_id)
+    lists = [lists for lists in board.colists]
+    return render_template('show-board.html', board=board, lists=lists)
 
 ##############################################################################
 # List
-@app.route("/create-list/<boardID>", methods=['GET', 'POST'])
-def createlist(boardID):
+@app.route("/<username>/board/<int:board_id>/create-list", methods=['GET', 'POST'])
+def createlist(username,board_id):
     """Create List."""
+    if 'username' not in session or username != session['username']:
+        return redirect('/')
     form = listForm()
     if form.validate_on_submit():
         name = form.name.data
-        response = requests.post(f"https://api.trello.com/1/boards/{boardID}/lists",
-        params = {
-            "key":"73ac60f9e2503794796f272568e34347",
-            "token":"605ac71e5c83d0481157a2236c56eae0adadd20a545fec6f2e46a5b6a5bdb81a",
-            "name":f"{name}"
-        })
-        b_id = CollabBoard.query.filter_by(boardID=boardID).first()
-        new_list = CollabList(name=name,boards_id=b_id)
-
+        user_id = session['user_id']
+        new_list = CollabList(name=name,boards_id=board_id,user_id=user_id )
+        # session['board_id'] = board_id
         db.session.add(new_list)
         db.session.commit()
-        return redirect(f'/board/{b_id}')
+        # curr_list = CollabList.query.filter_by(boards_id=board_id, name=name).first()
+        # list_id = curr_list.json().id
+        # session['list_id'] = list_id
+        return redirect(f'/{username}/board/{board_id}')
     return render_template('create-list.html', form=form)
+
+##############################################################################
+# Card
+@app.route("/<username>/board/<int:board_id>/list/<int:list_id>/create-card", methods=['GET', 'POST'])
+def createcard(username, board_id, list_id):
+    """Create Card."""
+    if 'username' not in session or username != session['username']:
+        flash("Please login first!")
+        return redirect('/')
+    form = cardForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        description = form.description.data
+        deadline = form.deadline.data
+        user_id = session['user_id']
+        new_card = CollabCard(name=name,description=description, deadline=deadline,lists_id=list_id, boards_id=board_id, user_id=user_id )
+
+        db.session.add(new_card)
+        db.session.commit()
+        return redirect(f'/{username}/board/{board_id}')
+    return render_template('create-card.html', form=form)

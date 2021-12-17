@@ -9,34 +9,45 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
   integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" href="/static/app.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&family=Questrial&family=Readex+Pro&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&family=Questrial&family=Readex+Pro&family=Roboto:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="p-3 mb-2 bg-secondary text-white">
+<div class="p-3 mb-2 nav-bg">
     <ul class="nav">
         <li class="nav-item col-2">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link" href="/">Home</a>
         </li>
         <li class="nav-item col-2">
             <a class="nav-link" href="#">Archive</a>
           </li>
           <li class="nav-item col-2">
           </li>
+          {% if session['username'] %}
+          <li class="nav-item col-2">
+            <a class="nav-link" href="/logout">Log Out</a>
+          </li>
+          {% else %}
         <li class="nav-item col-2">
-          <a class="nav-link" href="#">Log In</a>
+          <a class="nav-link" href="/login">Log In</a>
         </li>
         <li class="nav-item col-2">
-          <a class="nav-link" href="#">Sign Up</a>
+          <a class="nav-link" href="/register">Sign Up</a>
         </li>
-        <li class="nav-item col-2">
-          <a class="nav-link disabled">Log Out</a>
-        </li>
+        {% endif %}
+
       </ul>
     </div>
+    
 
 <div class="container">
 {% block content %}
 {% endblock %}
 </div>
-
+  <script src="script.js"></script>
 </body>
 </html>

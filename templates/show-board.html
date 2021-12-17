@@ -2,23 +2,36 @@
 
 {% block content %}
 
-<h1>{{response["name"]}}</h1>
+<h1>{{board.name}}</h1>
 
 
 
-<div class="row">
-{% for list in lists %}
-<div class="col-3">
-<p>{{list["name"]}}</p>
+<!-- <div class="row"> -->
+{% if lists|length == 0 %}
+<div>
+    <a href="/{{session['username']}}/board/{{board.id}}/create-list">Create a List</a>
 </div>
-{% endfor %}
+{% else %}
+<div class="box">
+    {% for list in lists %}
+    <!-- <div class="col-3"> -->
+    <div class="list-card">
+        <h5 class="list-title">{{list.name}}</h5>
+        {% for card in list.cards %}
+        <div class="card-name">
+            <h5>{{card.name}}</h5>
+        </div>
+        {% endfor %}
+        <a class="add-card" href="/{{session['username']}}/board/{{board.id}}/list/{{list.id}}/create-card"><span>Add a
+            card</span></a>
+    </div>
+    <!-- </div> -->
+    {% endfor %}
 </div>
-
 
 <div>
-<a href="/create-list/{{response['id']}}">Create a List</a>
+    <a href="/{{session['username']}}/board/{{board.id}}/create-list">Create a List</a>
 </div>
-<div>
-<a href="/add-card">Add a card</a>
-</div>
+
+{% endif %}
 {% endblock %}
