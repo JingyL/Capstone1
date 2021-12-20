@@ -309,7 +309,7 @@ def move_card_form(username,board_id, list_id,card_id):
     board = CollabBoard.query.get(board_id)
     list = CollabList.query.get(list_id)
     card= CollabCard.query.get(card_id)
-    lists = CollabList.query.filter(CollabList.id != list_id, CollabList.user_id == user.id).all()
+    lists = CollabList.query.filter(CollabList.id > list_id, CollabList.boards_id==board_id, CollabList.user_id == user.id).all()
     return render_template('move-card.html', username=username, board=board, list=list, card=card, lists=lists)
 
 @app.route("/<username>/board/<int:board_id>/list/<int:list_id>/card/<int:card_id>/moved", methods=['GET', 'POST'])
@@ -318,7 +318,7 @@ def move_card(username,board_id, list_id,card_id):
     user = User.query.filter_by(username=username).first()
     curr_card = CollabCard.query.get(card_id)
     list_name = request.form.getlist('checklist')[0]
-    lists= CollabList.query.filter(CollabList.name == list_name, CollabList.user_id == user.id).first()
+    lists= CollabList.query.filter(CollabList.name == list_name,CollabList.user_id == user.id).first()
     lists_id = lists.id
     curr_card.lists_id = lists_id
     db.session.commit()
