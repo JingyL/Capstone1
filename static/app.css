@@ -1,29 +1,45 @@
 
 body{
-    background: linear-gradient(to bottom right,  #ddd6f3, #b4ccda,#e9b5b2) fixed;
+    background-color: #FEFAE0;
+}
+.content{
+    text-align: center;
+}
+.welcome{
+    color: #CCD5AE;
+    font-family: 'Corinthia', cursive;
+    font-size: 55px;
+    margin-top: 20px;
+    margin-bottom: -10px; 
+}
+.welcome-title{
+    color: #728359;
+    text-shadow: 2px 2px 5px #647746;
+    font-size: 150px;
+    font-family: 'Lobster', cursive;
+}
+.dashboard{
+    color: #CCD5AE;
+    font-family: 'Readex Pro', sans-serif;
+    font-size: 25px;
+    /* text-shadow: 2px 2px 4px #728359; */
 }
 
-
-/* .welcome {
-    background-color: #FAEDCD !important; */
-    /* display: flex;
-    align-items: center;
-    align-items: start; */
-    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */
-    
-  /* } */
-
-
-.welcomebox{
-    border-radius: 5px !important;
-    background: #93a8c7 !important;
-    min-width: 200px !important;
-    min-height: 350px !important;
-    font-family: 'Josefin Sans', sans-serif !important;
-    text-align: center !important;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px !important;
+.quote{
+    color: #CCD5AE;
+    font-family: 'Readex Pro', sans-serif;
+    font-size: 25px;
+}
+.dashboard-l{
+    color: #647746;
+    font-family: 'Readex Pro', sans-serif;
+    font-size: 25px;
+    /* text-shadow: 2px 2px 4px #728359; */
 }
 
+.btn{
+    color: #647746;
+}
 /* center */
 .center {
     margin: 0;
@@ -35,14 +51,35 @@ body{
     transform: translate(-50%, -50%) 
 }
 
+.bottom {
+    margin: 0;
+    position: absolute;
+    top: 90%;
+    left: 30%;
+    /* margin-right: -50%; */
+    transform: translate(-50%, -50%);
+}
+.bottom2 {
+    margin: 0;
+    position: absolute;
+    top: 90%;
+    left: 70%;
+    /* margin-right: -50%; */
+    transform: translate(-50%, -50%);
+}
+
+
+
 /* nav-bar */
 .nav-bg{
-background-color: #504379;
+background-color: #728359;
 box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
+
 a:link {
     text-decoration: none;
-    color: aliceblue;
+    color: #FEFAE0;
+    text-shadow: 1px 1px 3px #728359;
   }
   
 a:visited {
@@ -50,31 +87,44 @@ a:visited {
   }
   
 a:hover {
-    text-decoration: underline;
+    text-decoration: none;
+    color: black;
   }
   
-  a:active {
-    text-decoration: underline;
+a:active {
+    text-decoration: none;
   }
 
 .nav-link{
-    color:white;
+    color:#FEFAE0;
+    text-shadow: 1px 1px 3px #728359;
     font-family: 'Readex Pro', sans-serif;
     font-size: 100%;
 }
 
 
+
 /* weather */
 .weatherbox{
     border-radius: 5px;
-    background: #93a8c7;
+    background: #728359;
+    animation: mymove 10s infinite linear;
     min-width: 200px;
-    min-height: 350px;
+    min-height: 300px;
     font-family: 'Josefin Sans', sans-serif;
     text-align: center;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
+
+
+@keyframes mymove {
+0% {background-color: #9aaa82;}
+25% {background-color: #CCD5AE;}
+50% {background-color: #c0a1bb;}
+75% {background-color: #CCD5AE;}
+100% {background-color: #82a7bd;}
+}
 
 .localtime{
     font-size: 18px;
@@ -113,6 +163,7 @@ a:hover {
     padding: 10px;
     font-family: 'Roboto', sans-serif;
     color:white;
+    text-shadow: 1px 1px 3px #b37c44;
     text-align: center;
     font-size: 150%;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
@@ -120,10 +171,12 @@ a:hover {
     
 }
 .card-name{
+    margin-top: 5px;
     margin-left: auto;
     margin-right: auto;
-    background-color: #CCD5AE;
+    background-color: #b9c29e;
     color:aliceblue;
+    text-shadow: 1px 1px 3px #728359;
     padding-top: 2%;
     padding-left: 2%;
     padding-right: 2%;
@@ -137,8 +190,66 @@ a:hover {
     display: flex;
     align-items: center;
     align-items: start;
+
     
   }
+
+.card-link{
+text-align: center;
+margin-top: 5px;
+  }
+
+
+
+.add-card{
+    font-size:15px;
+    color: #728359;
+    text-shadow: 1px 1px 3px #111111;
+  }
+
+
+/* Board */
+  .board-box{
+    background-color: #839764;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+    border-radius: 2px;  
+    position:flex;
+}
+
+  .board-link{
+    font-family: 'Readex Pro', sans-serif;
+    font-size:25px;
+    color: #FAEDCD;
+
+  }
+
+ .add-link{
+    font-size:320%;
+    color: #FAEDCD;
+    text-shadow: 1px 1px 3px #728359;
+
+  }
+
+  .page-title{
+    color: #656b4f;
+    font-size: 50px;
+    font-family: 'Readex Pro', sans-serif;
+    text-shadow: 2px 2px 5px #728359;
+  }
+
+.backtoDashboard{
+    margin-top: 50px;
+}
+.dashboard2{
+    color: #656b4f;
+    font-family: 'Readex Pro', sans-serif;
+    font-size: 20px;
+}
+
+
+
+
+
 
 
 

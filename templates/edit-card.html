@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="page-title">Edit Card Name</h1>
+
+
+<form action="/{{session['username']}}/board/{{board.id}}/list/{{list.id}}/card/{{card.id}}/edited" method="POST">
+    <div class="row">
+        <div class="col-sm-4">
+            <div>
+                <label>Name</label>
+                <input type="text" class="form-control" name="name" placeholder="{{card.name}}" value="{{card.name}}">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div>
+            <label>Description</label>
+            <input type="text" class="form-control" name="description" placeholder="{{card.description}}" value="{{card.description}}">
+        </div>
+    </div>
+
+
+<div class="col-sm-4">
+    <div>
+        <label>Deadline</label>
+        <input type="date" class="form-control" name="deadline" placeholder="{{card.deadline}}" value="{{card.deadline}}">
+    </div>
+</div>
+
+<!-- <h3>If you want move the card, please fill out bellow.</h3>
+<div class="col-sm-4">
+    <div>
+        <label>Move Card</label>
+        <input type="choice" class="form-control" name="move" placeholder="{{card.name}}" value="{{card.name}}">
+    </div>
+</div> -->
+
+
+
+        <button class="btn">Edit</button>
+        <a class="btn" href="/{{session['username']}}/board/{{board.id}}">Cancel</a>
+</form>
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,37 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="row">
+    <h1 class="page-title">{{board.name}}</h1>
+    <div>
+        <a class="add-link" href="/{{session['username']}}/board/{{board.id}}/create-list">&nbsp<i
+                class="fas fa-plus"></i></a>
+    </div>
+</div>
 
-<h1>{{board.name}}</h1>
-
-
-
-<!-- <div class="row"> -->
-{% if lists|length == 0 %}
+{% if keys|length == 0 %}
 <div>
-    <a href="/{{session['username']}}/board/{{board.id}}/create-list">Create a List</a>
+    <p>Add a list first</p>
 </div>
 {% else %}
 <div class="box">
-    {% for list in lists %}
-    <!-- <div class="col-3"> -->
+    {% for k in keys %}
     <div class="list-card">
-        <h5 class="list-title">{{list.name}}</h5>
-        {% for card in list.cards %}
+        <h5 id="edit-list" class="list-title"><a href="/{{session['username']}}/board/{{board.id}}/list/{{dic[k].id}}/edit">{{dic[k].name}}</a></h5>
+        {% for card in dic[k].cards %}
         <div class="card-name">
-            <h5>{{card.name}}</h5>
+            <h5><a href="/{{session['username']}}/board/{{board.id}}/list/{{dic[k].id}}/card/{{card.id}}/edit">{{card.name}}</a></h5>
+            <h5>{{card.description}}</h5>
+            <h5>{{card.deadline}}</h5>
+            <a href="/{{session['username']}}/board/{{board.id}}/list/{{dic[k].id}}/card/{{card.id}}/move">move card</a>
         </div>
         {% endfor %}
-        <a class="add-card" href="/{{session['username']}}/board/{{board.id}}/list/{{list.id}}/create-card"><span>Add a
-            card</span></a>
+    <div class="card-link">
+        <a class="add-card" href="/{{session['username']}}/board/{{board.id}}/list/{{dic[k].id}}/create-card"><span>Add a
+                card</span></a>
+            </div>
     </div>
-    <!-- </div> -->
     {% endfor %}
 </div>
-
-<div>
-    <a href="/{{session['username']}}/board/{{board.id}}/create-list">Create a List</a>
-</div>
-
 {% endif %}
+<div class="backtoDashboard">
+    <a class="dashboard2" href="/{{session['username']}}/board"><i class="fas fa-arrow-left"></i> dashboard</a>
+</div>
 {% endblock %}

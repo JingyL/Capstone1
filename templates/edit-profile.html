@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="page-title">Edit Your Profile</h1>
+
+
+<form action="/{{user.username}}/profile/edit-profile/edited" method="POST">
+    <div class="row">
+        <div class="col-sm-4">
+            <div>
+                <label>Username<span style = "color:red;"> -- Not Editable</span></label>
+                <input type="text" class="form-control" name="username" placeholder="{{user.username}}" value="{{user.username}}" readonly>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div>
+                <label>First_name</label>
+                <input type="text" class="form-control" name="first_name" placeholder="{{user.first_name}}" value="{{user.first_name}}">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div>
+                <label>Last_name</label>
+                <input type="text" class="form-control"  name="last_name" placeholder="{{user.last_name}}" value="{{user.last_name}}">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div>
+                <label>City</label>
+                <input type="text" class="form-control" name="city" placeholder="{{user.city}}" value="{{user.city}}">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div>
+                <label>State</label>
+                <input type="text" class="form-control" name="state" placeholder="{{user.state}}" value="{{user.state}}">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div>
+                <label>Email</label>
+                <input type="text" class="form-control" name="email" placeholder="{{user.email}}" value="{{user.email}}">
+            </div>
+        </div>
+    </div>
+
+
+        <button class="btn">Edit</button>
+        <a class="btn" href="/{{user.username}}/profile">Cancel</a>
+</form>
+
+
+
+
+
+
+
+{% endblock %}

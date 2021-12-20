@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="page-title">Move Card To</h1>
+
+
+<form action="/{{session['username']}}/board/{{board.id}}/list/{{list.id}}/card/{{card.id}}/moved" method="POST">
+    {% for list in lists %}
+            <div>
+                <label>{{list.name}}</label>
+                <input type="checkbox" class="form-control" name="checklist" value="{{list.name}}">
+            </div>
+
+
+
+{% endfor %}
+
+        <button class="btn btn-light">Edit</button>
+        <a class="btn" href="/{{session['username']}}/board/{{board.id}}">Cancel</a>
+</form>
+
+
+
+{% endblock %}

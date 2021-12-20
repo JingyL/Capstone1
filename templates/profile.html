@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="page-title">Profile</h1>
+<p>Username: {{user.username}}</p>
+<p>Name: {{user.first_name}} {{user.last_name}}</p>
+<p>Location: {{user.city}}, {{user.state}}</p>
+<p>Email: {{user.email}}</p>
+
+<a class="btn" href="/{{user.username}}/profile/edit-profile">Edit Profile</a>
+
+{% endblock %}

@@ -13,7 +13,7 @@
     if field.widget.input_type != 'hidden' %}
   <p>
     {{ field.label }}
-    {{ field(class_="form-control") }}
+    {{ field(class_="form-control col-sm-4") }}
 
     {% for error in field.errors %}
     <span class="form-text text-danger">{{ error }}</span>
@@ -21,7 +21,7 @@
   </p>
   {% endfor %}
 
-  <button class="btn btn-success" type="submit">Login</button>
+  <button class="btn" type="submit">Login</button>
 
 </form>
 {% endblock %}

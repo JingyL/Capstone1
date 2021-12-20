@@ -6,19 +6,20 @@
     <div class="col-9">
         <div class="row">
             <div>
-                <h1>board</h1>
+                <h1 class="page-title">All Boards</h1>
             </div>
             <div>
-                <a href="/{{session['username']}}/create-board"><i class="fas fa-plus"></i></a>
+                <a class="add-link" href="/{{session['username']}}/create-board">&nbsp<i class="fas fa-plus"></i></a>
             </div>
         </div>
         <div class="row">
             {% for board in boards %}
             <div class="col-3">
-                <div class="card bg-dark mb-3 text-center" style="height: 10rem; width: 10rem;">
-                    <p class="center"><a href="/{{session['username']}}/board/{{board.id}}">{{board.name}}</a></p>
+                <div class="board-box" style="height: 10rem; width: 100%;">
+                    <p class="center"><a class="board-link" href="/{{session['username']}}/board/{{board.id}}">{{board.name}}</a></p>
+                    <p class="bottom"><a class="board-link" href="/{{session['username']}}/board/{{board.id}}/delete"><i class="far fa-trash-alt"></i></a></p>
+                    <p class="bottom2"><a class="board-link archive-font" href="/{{session['username']}}/board/{{board.id}}/archive"><i class="fas fa-archive"></i></a></p>
                 </div>
-
             </div>
             {% endfor %}
         </div>
@@ -27,7 +28,7 @@
 
     <div class="col-3">
         <div class="weatherbox">
-            <p class="temp">{{weather["main"]["temp"]}}<span>&#8457;</span></p>
+            <p class="temp">{{weather["main"]["temp"]}}<span>&#8451;</span></p>
             <p class="description">{{weather["weather"][0]["main"]}}</p>
             <p class="localtime">{{weather["name"]}}</p>
 

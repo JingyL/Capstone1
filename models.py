@@ -64,7 +64,9 @@ class CollabBoard(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
-    name = db.Column(db.Text, nullable=False, unique=True)
+    name = db.Column(db.Text, nullable=False)
+
+    archive=db.Column(db.Boolean, default=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
@@ -80,11 +82,11 @@ class CollabList(db.Model):
 
     name = db.Column(db.Text, nullable=False)
 
-    boards_id = db.Column(db.Integer, db.ForeignKey('boards.id'), nullable=False)
+    boards_id = db.Column(db.Integer, db.ForeignKey('boards.id'))
 
     boards = db.relationship('CollabBoard', backref='colists')
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     users = db.relationship('User', backref='colists')
 
@@ -99,13 +101,13 @@ class CollabCard(db.Model):
     description = db.Column(db.Text, nullable=False)
     deadline = db.Column(db.DateTime, nullable=False)
 
-    lists_id = db.Column(db.Integer, db.ForeignKey('colists.id'), nullable=False)
-    boards_id = db.Column(db.Integer, db.ForeignKey('boards.id'), nullable=False)
+    lists_id = db.Column(db.Integer, db.ForeignKey('colists.id'))
+    boards_id = db.Column(db.Integer, db.ForeignKey('boards.id'))
     colists = db.relationship('CollabList', backref='cards')
     boards = db.relationship('CollabBoard', backref='cards')
 
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     users = db.relationship('User', backref='cards')
 

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="page-title">Edit Your Profile</h1>
+
+
+<form action="/{{session['username']}}/board/{{board.id}}/list/{{list.id}}/edit/edited" method="POST">
+    <div class="row">
+        <div class="col-sm-4">
+            <div>
+                <label>Edit List Name</label>
+                <input type="text" class="form-control" name="name" placeholder="{{list.name}}" value="{{list.name}}">
+            </div>
+        </div>
+    </div>
+
+        <button class="btn">Edit</button>
+        <a class="btn" href="/{{session['username']}}/board/{{board.id}}">Cancel</a>
+</form>
+
+
+
+
+
+
+
+{% endblock %}

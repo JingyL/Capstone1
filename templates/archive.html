@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div>
+        <h1 class="page-title">All Archive Boards</h1>
+    </div>
+</div>
+<div class="row">
+    {% for board in boards %}
+    <div class="col-3">
+        <div class="board-box" style="height: 10rem; width: 100%;">
+            <p class="center"><a class="board-link" href="/{{session['username']}}/archive/{{board.id}}/archive">{{board.name}}</a></p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="backtoDashboard">
+    <a class="dashboard2" href="/{{session['username']}}/board"><i class="fas fa-arrow-left"></i> dashboard</a>
+</div>
+{% endblock %}
