@@ -2,25 +2,22 @@
 # Capstone 1 Proposal
 
 ## Goal of Project:
-The goal of this website is to make an advanced To Do list web app. Within the web, users can create a new board of each project, add lists of progress and each step under the list. The target users can be anyone who wants to manage their assignments or projects. (For the collab functions, I may add it if I have times)
+The goal of this website is to make an advanced To Do list web app. Within the web, users can create a new board of each project, add lists of progress and each step under the list. Within the list, user can move their steps. The target users can be anyone who wants to manage their assignments or projects. 
 
 ## Data and API:
-After I read through the Trello API, I think the most important elements for the database are users, boards, lists and cards. The basic data be looked like below:
-![This is an image](/data.png)
+The most important elements for the database are users, boards, lists and cards. The basic data be looked like below:
+![This is an image](/data2.png)
 
-Users table has information of username, password and board_id (refer to boards table).
-Boards table has information of board name
-Lists table has information of list name
-Cards table has information of cards name, description, deadline.
+Users table has information of username, password, email, firstname, lastname, city and state.
+Boards table has information of board name, archive(boolean value), users_id(refer to users table).
+Lists table has information of list name, boards_id, users_id(refer to boards and users table).
+Cards table has information of cards name, description, deadline, lists_id,boards_id, users_id (refer to lists,boards and users table).
 
-_ _Haven’t found solutions to connect boards, lists and cards
-The database may add more data based on the features that I want to add._ _
-
-(Added)API:
-OpenWeatherMap API, based on users location show current weather and 4-days weather
+API:
+This web used OpenWeatherMap API, which shows user with his/her place's weather based on user's location. The location data are saved in users table.
 
 ## User Flow:
-Users have to signup/login first, and then they can see their existing boards or add a new board. After clicking on the board they want to see, the page will jump to the board page. Then users can adjust their lists and cards.
+Users have to signup/login first, and then they can see their existing boards or add a new board. After clicking on the board they want to see, the page will jump to the board page. User can add, delete/archive their boards. Users can also adjust their lists and cards.
 ![This is an image](/user-flow.png)
 
 
