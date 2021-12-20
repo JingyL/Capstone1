@@ -20,4 +20,13 @@ This web used OpenWeatherMap API, which shows user with his/her place's weather 
 Users have to signup/login first, and then they can see their existing boards or add a new board. After clicking on the board they want to see, the page will jump to the board page. User can add, delete/archive their boards. Users can also adjust their lists and cards.
 ![This is an image](/user-flow.png)
 
+## Web App Outlook:
 
+Main Page
+![This is an image](/main.png)
+
+Board Page
+![This is an image](/board.png)
+
+List Page
+![This is an image](/list.png)
