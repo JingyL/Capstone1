@@ -4,3 +4,7 @@
 //     evt.preventDefault();
 //     $('#edit-list').append("<li> AAAAA </li>");
 //   });
+
+
+// require('dotenv').config;
+// console.log(process.env);

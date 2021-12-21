@@ -7,6 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy import asc
 import requests
 import json
+from config import api_key
 
 
 app = Flask(__name__)
@@ -21,7 +22,6 @@ debug = DebugToolbarExtension(app)
 
 connect_db(app)
 db.create_all()
-
 
 s_code = {"AL": "01", "AK": "54", "AZ": "02", "AR": "03", "CA": "04", 
         "CO": "05", "CT": "06", "DC": "08", "DE": "07", "FL": "09", "GA": "10", 
@@ -142,7 +142,7 @@ def root(username):
     weather_res = requests.get("http://api.openweathermap.org/data/2.5/weather",
         params = {
             "q": f"{city}, us",
-            "appid":"c69ce1abd18c0eae09db094b5f772100",
+            "appid": api_key,
             "units": "metric"
         })
     weather = weather_res.json()
