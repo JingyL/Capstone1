@@ -9,5 +9,7 @@
 <p>Email: {{user.email}}</p>
 
 <a class="btn" href="/{{user.username}}/profile/edit-profile">Edit Profile</a>
-
+<div class="backtoDashboard">
+    <a class="dashboard2" href="/{{session['username']}}/board"><i class="fas fa-arrow-left"></i> dashboard</a>
+</div>
 {% endblock %}
