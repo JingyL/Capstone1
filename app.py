@@ -323,7 +323,7 @@ def move_card(username,board_id, list_id,card_id):
     user = User.query.filter_by(username=username).first()
     curr_card = CollabCard.query.get(card_id)
     list_name = request.form.getlist('checklist')[0]
-    lists= CollabList.query.filter(CollabList.name == list_name,CollabList.user_id == user.id).first()
+    lists= CollabList.query.filter(CollabList.name == list_name,CollabList.boards_id==board_id, CollabList.user_id == user.id).first()
     lists_id = lists.id
     curr_card.lists_id = lists_id
     db.session.commit()
